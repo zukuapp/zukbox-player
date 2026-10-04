@@ -35,25 +35,28 @@ export const execute = async (
 
     if (useWebGPU && "gpu" in navigator) {
         const gpu = navigator.gpu as GPU;
-        const adapter = await gpu.requestAdapter();
-        if (!adapter) {
-            throw new Error("WebGPU adapter not available");
+        // API presence does not guarantee an available graphics adapter/device.
+        // Acquire these before binding the canvas so WebGL2 remains usable.
+        let device: GPUDevice | null = null;
+        try {
+            const adapter = await gpu.requestAdapter();
+            device = adapter ? await adapter.requestDevice() : null;
+        } catch {
+            // Browser/driver restrictions can make WebGPU initialization fail.
+            // The existing WebGL2 renderer is the compatible fallback.
         }
-
-        const device = await adapter.requestDevice();
-        if (!device) {
-            throw new Error("WebGPU device not available");
+        if (device) {
+            const context = canvas.getContext("webgpu");
+            if (context) {
+                const preferredFormat = gpu.getPreferredCanvasFormat();
+                $setContext(new WebGPUContext(device, context, preferredFormat, device_pixel_ratio));
+                return;
+            }
+            device.destroy();
         }
+    }
 
-        const context = canvas.getContext("webgpu");
-        if (!context) {
-            throw new Error("WebGPU context not available");
-        }
-
-        const preferredFormat = gpu.getPreferredCanvasFormat();
-        $setContext(new WebGPUContext(device, context, preferredFormat, device_pixel_ratio));
-
-    } else {
+    {
         const gl: WebGL2RenderingContext | null = canvas.getContext("webgl2", {
             "stencil": true,
             "premultipliedAlpha": true,

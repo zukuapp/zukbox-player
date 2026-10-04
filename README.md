@@ -59,3 +59,7 @@ npm run build:vite
 - [ZUKU 개발자 문서](https://zukuapp.github.io/docs/): 플랫폼 전체 문서
 
 기여 방법은 [조직 공통 가이드](https://github.com/zukuapp/.github/blob/main/CONTRIBUTING.md), 취약점 신고 방법은 [보안 정책](SECURITY.md)을 확인해 주세요.
+
+## ZUKU game-development npm distribution
+
+The maintained fork is available to game developers as `@zuku/player`. Install with `npm install @zuku/player` and see [the browser ESM API and build guide](npm/player/README.md). The distribution includes renderer workers and TypeScript 6 declarations without local workspace dependencies. The source package names, upstream MIT copyright notices, and original Next2D APIs are preserved. This fork does not publish the upstream `@next2d/*` namespace.

@@ -1,70 +1,46 @@
-name: Publish Package
+name: ZUKU player distribution
 
 on:
   push:
-    branches:
-      - main
-    paths-ignore:
-      - '**/*.md'
-      - '.github/workflows/publish.yml'
+    branches: [main]
+    paths:
+      - npm/player/**
+      - packages/renderer/src/Command/service/CommandInitializeContext*
+      - .github/workflows/publish.yml
+  pull_request:
+    paths:
+      - npm/player/**
+      - packages/renderer/src/Command/service/CommandInitializeContext*
+      - .github/workflows/publish.yml
+  workflow_dispatch:
 
 permissions:
-  id-token: write
   contents: read
 
 jobs:
   lint:
     uses: ./.github/workflows/lint.yml
-
   integration:
     uses: ./.github/workflows/integration.yml
-
-  publish:
+  package:
     needs: [lint, integration]
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-      id-token: write
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: 24
-          registry-url: "https://registry.npmjs.org"
-      - run: npm install -g npm@latest
-      - run: npm ci
-      - run: npm run publish:dist
-      - run: npm publish --access public
-        working-directory: ./dist/src
-      - run: npm publish --access public
-        working-directory: ./dist/packages/cache
-      - run: npm publish --access public
-        working-directory: ./dist/packages/core
-      - run: npm publish --access public
-        working-directory: ./dist/packages/display
-      - run: npm publish --access public
-        working-directory: ./dist/packages/events
-      - run: npm publish --access public
-        working-directory: ./dist/packages/filters
-      - run: npm publish --access public
-        working-directory: ./dist/packages/geom
-      - run: npm publish --access public
-        working-directory: ./dist/packages/media
-      - run: npm publish --access public
-        working-directory: ./dist/packages/net
-      - run: npm publish --access public
-        working-directory: ./dist/packages/render-queue
-      - run: npm publish --access public
-        working-directory: ./dist/packages/renderer
-      - run: npm publish --access public
-        working-directory: ./dist/packages/text
-      - run: npm publish --access public
-        working-directory: ./dist/packages/texture-packer
-      - run: npm publish --access public
-        working-directory: ./dist/packages/ui
-      - run: npm publish --access public
-        working-directory: ./dist/packages/webgl
-      - run: npm publish --access public
-        working-directory: ./dist/packages/webgpu
-      - run: npm run clean
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Renderer capability regression
+        run: >-
+          npx --no-install vitest run
+          packages/renderer/src/Command/service/CommandInitializeContextService.test.ts
+          packages/renderer/src/Command/service/CommandInitializeContextFallback.test.ts
+      - run: node npm/player/build.mjs
+      - run: node npm/player/check-packed.mjs
+      - name: Pack only the ZUKU distribution
+        run: npm pack ./npm/player --pack-destination "$RUNNER_TEMP"
+
+# This fork does not publish the upstream @next2d namespace.
+# A release operator publishes the verified @zuku/player archive explicitly.

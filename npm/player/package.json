@@ -1,0 +1,40 @@
+{
+  "name": "@zuku/player",
+  "version": "0.1.0",
+  "description": "ZUKU browser game player distribution of the maintained Next2D fork",
+  "type": "module",
+  "license": "MIT",
+  "main": "./dist/player.js",
+  "module": "./dist/player.js",
+  "types": "./types/npm/player/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/npm/player/index.d.ts",
+      "import": "./dist/player.js"
+    }
+  },
+  "files": [
+    "dist/",
+    "types/",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "README.md",
+    "assets/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zukuapp/zukbox-player.git",
+    "directory": "npm/player"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "zuku",
+    "zukbox",
+    "game",
+    "next2d",
+    "webgl",
+    "webgpu"
+  ]
+}

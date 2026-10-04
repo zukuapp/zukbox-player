@@ -1,0 +1,6 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": { "emitDeclarationOnly": true, "outDir": "./types", "rootDir": "../.." },
+  "include": ["index.ts", "../../packages/**/*.ts", "../../@types/**/*.ts"],
+  "exclude": ["../../node_modules", "../../dist", "../../build", "../../npm/player/types", "../../packages/**/*.test.ts"]
+}
