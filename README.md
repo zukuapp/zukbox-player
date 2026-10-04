@@ -1,8 +1,22 @@
+<!-- BEGIN ZUKU OFFICIAL BRAND -->
+<!-- markdownlint-disable MD033 MD041 -->
+<p align="center">
+  <a href="https://docs.zuzunza.com/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)"
+        srcset="docs/branding/zuku-logo-dark.png">
+      <img src="docs/branding/zuku-logo-light.png"
+        alt="ZUKU" width="320">
+    </picture>
+  </a>
+</p>
+<p align="center">ZUKU - 내가 불러 일으키는 새로운 창작.</p>
+<!-- markdownlint-enable MD033 MD041 -->
+<!-- END ZUKU OFFICIAL BRAND -->
+
 # ZUKBOX Player
 
 이 저장소는 [Next2D Player](https://github.com/Next2D/Player)의 ZUKU 포크입니다. 디스플레이 트리, 텍스트·미디어, 렌더링 큐, WebGL·WebGPU 렌더러를 npm 워크스페이스로 관리합니다. 원본 저작권과 [MIT 라이선스](LICENSE)를 유지합니다.
-
-<a href="https://zukuapp.github.io/docs/"><img src="https://raw.githubusercontent.com/zukuapp/.github/main/profile/assets/developer-hero.png" alt="Trecillo × ZUKU 개발자 문서" width="760"></a>
 
 **문서 입구:** [ZUKU 개발자 문서](https://zukuapp.github.io/docs/) · [이 저장소의 개발 가이드](DEVELOP.md)
 
