@@ -106,6 +106,8 @@ const $intentionallyDestroyed: WeakSet<GPUDevice> = new WeakSet();
  */
 let $activeDevice: GPUDevice | null = null;
 
+let $activeWebGLLoss: { canvas: OffscreenCanvas; handler: (event: Event) => void } | null = null;
+
 const destroyDevice = (device: GPUDevice | null): void =>
 {
     if (!device) {
@@ -157,11 +159,26 @@ const createVerifiedWebGPUContext = async (
     const gpu = navigator.gpu as GPU;
     let device: GPUDevice | null = null;
     try {
-        const adapter = await gpu.requestAdapter();
+        // Discovery and device creation may remain pending when a driver/GPU process stalls.
+        // Bound acquisition before touching either canvas so the worker can still use WebGL2.
+        const adapter = await withTimeout(gpu.requestAdapter());
+        if (adapter === TIMEOUT) {
+            throw new Error("webgpu adapter discovery timed out");
+        }
         if (!adapter) {
             return null;
         }
-        device = await adapter.requestDevice();
+        const deviceRequest = adapter.requestDevice();
+        const acquired = await withTimeout(deviceRequest);
+        if (acquired === TIMEOUT) {
+            // A timed-out request cannot be cancelled. Release a late device without binding
+            // it, and observe a late rejection so the fallback has no unhandled rejection.
+            void deviceRequest.then(destroyDevice, (): void => {
+                // WebGL2 already owns the renderer; only observe the abandoned rejection.
+            });
+            throw new Error("webgpu device creation timed out");
+        }
+        device = acquired;
 
         let lost = false;
         device.lost.then((): void => { lost = true }, (): void => { lost = true });
@@ -309,6 +326,15 @@ export const execute = async (
     on_lost?: RendererLostCallback
 ): Promise<"webgpu" | "webgl2"> => {
 
+    // A replaced canvas must not invalidate its successor if its context is lost later.
+    if ($activeWebGLLoss) {
+        const { "canvas": previous, handler } = $activeWebGLLoss;
+        if (typeof previous.removeEventListener === "function") {
+            previous.removeEventListener("webglcontextlost", handler);
+        }
+        $activeWebGLLoss = null;
+    }
+
     // Release the device of a previous (lost or replaced) renderer.
     destroyDevice($activeDevice);
     $activeDevice = null;
@@ -363,10 +389,16 @@ export const execute = async (
         }
 
         if (on_lost && typeof canvas.addEventListener === "function") {
-            canvas.addEventListener("webglcontextlost", (event: Event): void => {
+            const handler = (event: Event): void => {
+                if ($activeWebGLLoss?.handler !== handler) {
+                    return ;
+                }
+                $activeWebGLLoss = null;
                 event.preventDefault();
                 on_lost({ "backend": "webgl2", "reason": "webglcontextlost", "message": "" });
-            }, { "once": true });
+            };
+            $activeWebGLLoss = { canvas, handler };
+            canvas.addEventListener("webglcontextlost", handler, { "once": true });
         }
 
         // Set CanvasToWebGLContext

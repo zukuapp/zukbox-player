@@ -15,7 +15,7 @@ import assert from 'node:assert/strict';
 const here = new URL('.', import.meta.url).pathname;
 const bundle = resolve(process.env.PLAYER_DIST || resolve(here, 'dist/player.js'));
 const faults = readFileSync(resolve(here, 'renderer-fallback-faults.js'), 'utf8');
-const MODES = (process.env.MODES || 'none,null-adapter,device-reject,getcontext-null,preferred-format-throws,configure-throws,configure-throws-real,ctor-throws,shader-invalid,device-lost-init,device-lost-after,no-backend').split(',');
+const MODES = (process.env.MODES || 'none,null-adapter,adapter-hung,device-reject,device-hung,getcontext-null,preferred-format-throws,configure-throws,configure-throws-real,ctor-throws,shader-invalid,device-lost-init,device-lost-after,no-backend').split(',');
 const page = `<!doctype html><meta charset="utf-8"><style>html,body{margin:0;background:#f0f}#stage{width:320px;height:240px}</style><div id="stage"></div>
 <script type="module">import player from '/player.js';
 window.ready=(async()=>{const root=await player.createRootMovieClip(320,240,30,{tagId:'stage',bgColor:'#ffffff'});
@@ -30,7 +30,7 @@ await new Promise((r) => server.listen(0, '127.0.0.1', r));
 const origin = `http://127.0.0.1:${server.address().port}`;
 const browser = process.env.CHROME_CDP_URL
   ? await chromium.connectOverCDP(process.env.CHROME_CDP_URL)
-  : await chromium.launch({ args: (process.env.CHROME_ARGS || '--use-angle=swiftshader --enable-unsafe-swiftshader').split(' ').filter(Boolean) });
+  : await chromium.launch({ chromiumSandbox: true, executablePath: process.env.CHROME_PATH || undefined, args: (process.env.CHROME_ARGS || '--use-angle=swiftshader --enable-unsafe-swiftshader').split(' ').filter(Boolean) });
 const isColor = (p, [r, g, b]) => p && Math.abs(p[0] - r) < 40 && Math.abs(p[1] - g) < 40 && Math.abs(p[2] - b) < 40 && p[3] > 200;
 const frame = (tab) => tab.evaluate(() => { const src = document.querySelector('#stage canvas'); const k = document.createElement('canvas'); k.width = src.width; k.height = src.height; const x = k.getContext('2d'); x.drawImage(src, 0, 0); return [...x.getImageData(src.width >> 1, src.height >> 1, 1, 1).data]; });
 const capture = (tab) => tab.evaluate(async () => { try { const c = await Promise.race([window.game.player.captureToCanvas(window.game.shape), new Promise((_, j) => setTimeout(() => j(new Error('capture hung')), 4000))]); return [...c.getContext('2d').getImageData(110, 70, 1, 1).data]; } catch (e) { return String(e.message); } });
@@ -50,6 +50,9 @@ try {
       await tab.evaluate(() => window.game.shape.graphics.clear().beginFill(0xffb500).drawRect(0, 0, 120, 120).endFill());
       await tab.waitForTimeout(800);
       const probe = await tab.evaluate(() => window.__probe);
+      if (mode === 'adapter-hung' || mode === 'device-hung') {
+        assert(probe.some(p => p.t === 'inject' && p.what === (mode === 'adapter-hung' ? 'requestAdapter never settles' : 'requestDevice never settles')), 'hung acquisition fault must execute');
+      }
       const ready = probe.filter((p) => p.t === 'main-recv' && p.message === 'rendererReady').map((p) => p.backend);
       Object.assign(row, { backend: ready.at(-1) || null, frame: await frame(tab), capture: await capture(tab), pageErrors });
       if (mode === 'no-backend') {

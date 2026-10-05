@@ -245,6 +245,23 @@ describe("renderer capability fallback", () => {
         expect(mocks.cacheReset).toHaveBeenCalled();
     });
 
+    it("removes the replaced WebGL2 canvas listener and ignores a queued stale loss", async () => {
+        vi.stubGlobal("navigator", {});
+        const previous = { ...realCanvas(), removeEventListener: vi.fn() };
+        const next = { ...realCanvas(), removeEventListener: vi.fn() };
+        const oldLost = vi.fn();
+        const newLost = vi.fn();
+        await execute(previous as unknown as OffscreenCanvas, 1, "webgl2", oldLost);
+        const oldHandler = previous.addEventListener.mock.calls[0][1] as (event: Event) => void;
+        await execute(next as unknown as OffscreenCanvas, 1, "webgl2", newLost);
+        expect(previous.removeEventListener).toHaveBeenCalledWith("webglcontextlost", oldHandler);
+        oldHandler(new Event("webglcontextlost"));
+        expect(oldLost).not.toHaveBeenCalled();
+        const nextHandler = next.addEventListener.mock.calls[0][1] as (event: Event) => void;
+        nextHandler(new Event("webglcontextlost"));
+        expect(newLost).toHaveBeenCalledOnce();
+    });
+
     it("watches WebGL2 context loss when a loss callback is provided", async () => {
         vi.stubGlobal("navigator", {});
         const canvas = realCanvas();

@@ -18,8 +18,14 @@ shape.graphics.beginFill(0x00bcf2).drawRect(0, 0, 80, 80).endFill();
 root.addChild(shape);
 ```
 
-브라우저 전용입니다. 서버에서 렌더러를 시작하지 마세요. Next2D 인스턴스 및 기존 display / events / filters / geom / media / net / text / ui API를 제공합니다. `Next2D`, `next2d`도 이름으로 가져올 수 있습니다. 3.11.0은 기반 플레이어의 버전이며 0.1.1은 이 배포 패키지의 버전입니다. 기존 게임 파일의 지원 범위를 확대했다고 주장하지 않습니다.
+브라우저 전용입니다. 서버에서 렌더러를 시작하지 마세요. Next2D 인스턴스 및 기존 display / events / filters / geom / media / net / text / ui API를 제공합니다. `Next2D`, `next2d`도 이름으로 가져올 수 있습니다. 3.11.0은 기반 플레이어의 버전이며 0.1.2는 이 배포 패키지의 버전입니다. 기존 게임 파일의 지원 범위를 확대했다고 주장하지 않습니다.
 
 Worker 실행을 위해 호스트 CSP에 `worker-src 'self' blob: data:`를 지정하세요. 플레이어의 동적 스타일은 `style-src 'self' 'unsafe-inline'`이 필요합니다. JavaScript `unsafe-eval` 권한은 요구하지 않습니다. WebGPU adapter/device를 사용할 수 없으면 WebGL2로 전환합니다. 실제 브라우저와 장치의 그래픽 지원을 확인해야 합니다. This package needs a DOM, Workers and a supported graphics backend; Node.js consumers should use its types or import it in their browser bundle. TypeScript 6 or later, `moduleResolution: Bundler` and DOM types are required; WebGPU declarations are included in TypeScript 6's DOM library.
 
 소스에서 다시 빌드할 때 저장소 루트에서 `npm ci` 후 `node npm/player/build.mjs`를 실행합니다. 공식 로고는 승인된 원본 PNG 파일입니다. THIRD_PARTY_NOTICES.md와 LICENSE에 원본 권리 표시를 제공합니다.
+
+## Graphics recovery
+
+WebGPU capability acquisition is bounded. Failed initialization or a lost device falls back to WebGL2; when the stage canvas is already bound to WebGPU, the player replaces it and restores its size. Late results and errors from a replaced renderer cannot overwrite the current renderer. Recovery is limited to two canvas replacements per page. If both backends fail, the player reports `next2d-renderer` with `state: "failed"` and releases waiting render/capture buffers.
+
+WebGPU 초기화 실패와 장치 손실 시 WebGL2로 복구합니다. 장치 탐색 대기에도 제한이 있고, 교체된 렌더러의 늦은 알림은 무시합니다. 실제 GPU 성능·60FPS는 이 소프트웨어 렌더링 검증에서 보장하지 않습니다.

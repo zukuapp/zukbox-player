@@ -49,11 +49,15 @@ export class CommandController
      */
     public rendererReady: boolean;
 
+    // Loss callbacks belong to one initialized canvas, never to its replacement.
+    private rendererGeneration: number;
+
     constructor ()
     {
         this.state = "deactivate";
         this.queue = [];
         this.rendererReady = false;
+        this.rendererGeneration = 0;
     }
 
     /**
@@ -107,6 +111,7 @@ export class CommandController
         switch (object.command) {
 
             case "initialize":
+                this.rendererGeneration++;
                 this.rendererReady = false;
                 globalThis.postMessage({
                     "message": "rendererInitFailed",
@@ -196,11 +201,17 @@ export class CommandController
             case "initialize":
                 {
                     this.rendererReady = false;
+                    const generation = ++this.rendererGeneration;
+                    let lossReported = false;
                     const backend = await commandInitializeContextService(
                         object.canvas as OffscreenCanvas,
                         object.devicePixelRatio as number,
                         object.backend === "webgl2" ? "webgl2" : "auto",
                         (detail): void => {
+                            if (generation !== this.rendererGeneration || lossReported) {
+                                return ;
+                            }
+                            lossReported = true;
                             this.rendererReady = false;
                             globalThis.postMessage({
                                 "message": "rendererLost",
@@ -210,6 +221,9 @@ export class CommandController
                             });
                         }
                     );
+                    if (generation !== this.rendererGeneration || lossReported) {
+                        return ;
+                    }
                     this.rendererReady = true;
                     globalThis.postMessage({
                         "message": "rendererReady",

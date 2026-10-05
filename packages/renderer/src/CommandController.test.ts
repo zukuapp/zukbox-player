@@ -20,10 +20,56 @@ import { RendererInitializeError } from "./Command/service/CommandInitializeCont
 const renderMessage = () => ({ "command": "render", "buffer": new Float32Array(8), "length": 4, "imageBitmaps": null });
 const initMessage = (backend?: string) => ({ "command": "initialize", "canvas": {}, "devicePixelRatio": 1, backend });
 
-afterEach(() => { vi.unstubAllGlobals(); vi.clearAllMocks(); mocks.posted.length = 0; });
+afterEach(() => { vi.unstubAllGlobals(); vi.clearAllMocks(); mocks.initialize.mockReset(); mocks.posted.length = 0; });
 const stubPost = () => vi.stubGlobal("postMessage", (...args: unknown[]) => { mocks.posted.push(args); });
 
 describe("CommandController renderer failure handling", () => {
+    it("keeps a replacement renderer ready when an old canvas reports a delayed loss", async () => {
+        stubPost();
+        const callbacks: ((d: unknown) => void)[] = [];
+        mocks.initialize.mockImplementation(async (_c: unknown, _d: unknown, _b: unknown, onLost: (d: unknown) => void) => {
+            callbacks.push(onLost);
+            return "webgl2";
+        });
+        const controller = new CommandController();
+        controller.queue.push(initMessage() as never, initMessage("webgl2") as never);
+        await controller.execute();
+        callbacks[0]({ backend: "webgl2", reason: "webglcontextlost", message: "old canvas" });
+        controller.queue.push(renderMessage() as never);
+        await controller.execute();
+        expect(controller.rendererReady).toBe(true);
+        expect(mocks.render).toHaveBeenCalledOnce();
+        expect(mocks.posted.map(p => (p[0] as { message: string }).message)).toEqual(["rendererReady", "rendererReady", "render"]);
+    });
+
+    it("reports a renderer loss once when device loss and validation failure both arrive", async () => {
+        stubPost();
+        let lost!: (d: unknown) => void;
+        mocks.initialize.mockImplementationOnce(async (_c: unknown, _d: unknown, _b: unknown, onLost: (d: unknown) => void) => {
+            lost = onLost;
+            return "webgpu";
+        });
+        const controller = new CommandController();
+        controller.queue.push(initMessage() as never);
+        await controller.execute();
+        lost({ backend: "webgpu", reason: "unknown", message: "GPU reset" });
+        lost({ backend: "webgpu", reason: "validation", message: "same GPU reset" });
+        expect(mocks.posted.map(p => (p[0] as { message: string }).message)).toEqual(["rendererReady", "rendererLost"]);
+    });
+
+    it("does not announce ready after a renderer reports loss during initialization", async () => {
+        stubPost();
+        mocks.initialize.mockImplementationOnce(async (_c: unknown, _d: unknown, _b: unknown, onLost: (d: unknown) => void) => {
+            onLost({ backend: "webgpu", reason: "validation", message: "lost before ready" });
+            return "webgpu";
+        });
+        const controller = new CommandController();
+        controller.queue.push(initMessage() as never);
+        await controller.execute();
+        expect(controller.rendererReady).toBe(false);
+        expect(mocks.posted.map(p => (p[0] as { message: string }).message)).toEqual(["rendererLost"]);
+    });
+
     it("does not stay active forever when initialization throws, and reports the failure", async () => {
         stubPost();
         mocks.initialize.mockRejectedValueOnce(new RendererInitializeError("webgpu canvas configuration failed", "webgpu", true));

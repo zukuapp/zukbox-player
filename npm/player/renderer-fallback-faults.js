@@ -24,7 +24,9 @@
     if (self.GPU) {
       const origReqAdapter = GPU.prototype.requestAdapter;
       GPU.prototype.requestAdapter = async function (o) {
+        if (MODE === 'adapter-hung') { post({ t: 'inject', what: 'requestAdapter never settles' }); return new Promise(() => {}); }
         if (MODE === 'null-adapter' || MODE === 'no-backend') { post({ t: 'adapter', result: 'null(injected)' }); return null; }
+        if (MODE === 'device-hung') { return { requestDevice: () => { post({ t: 'inject', what: 'requestDevice never settles' }); return new Promise(() => {}); } }; }
         const a = await origReqAdapter.call(this, o);
         post({ t: 'adapter', result: a ? 'GPUAdapter' : 'null' });
         return a;
@@ -36,6 +38,7 @@
     if (self.GPUAdapter) {
       const origReqDevice = GPUAdapter.prototype.requestDevice;
       GPUAdapter.prototype.requestDevice = async function (d) {
+        if (MODE === 'device-hung') { post({ t: 'inject', what: 'requestDevice never settles' }); return new Promise(() => {}); }
         if (MODE === 'device-reject') { post({ t: 'inject', what: 'requestDevice rejects' }); throw new DOMException('injected requestDevice failure', 'OperationError'); }
         const dev = await origReqDevice.call(this, d);
         post({ t: 'device', result: 'GPUDevice' });
