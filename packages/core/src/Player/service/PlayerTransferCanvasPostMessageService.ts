@@ -98,14 +98,21 @@ export const execute = async <D extends DisplayObject> (
             }
 
             const buffer = event.data.buffer;
-            if (renderQueue.buffer.length < buffer.length) {
+            if (buffer && renderQueue.buffer.length < buffer.length) {
                 renderQueue.buffer = buffer;
+            }
+
+            $rendererWorker.removeEventListener("message", drawCanvas);
+
+            // The renderer reports a failed capture (no context / lost device) instead of
+            // never answering; the caller gets the untouched canvas back.
+            if (!event.data.imageBitmap) {
+                return resolve(transferred_canvas);
             }
 
             const context = transferred_canvas.getContext("2d") as CanvasRenderingContext2D;
             context.drawImage(event.data.imageBitmap, 0, 0);
 
-            $rendererWorker.removeEventListener("message", drawCanvas);
             return resolve(transferred_canvas);
         };
 

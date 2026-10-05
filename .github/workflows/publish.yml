@@ -37,6 +37,9 @@ jobs:
           npx --no-install vitest run
           packages/renderer/src/Command/service/CommandInitializeContextService.test.ts
           packages/renderer/src/Command/service/CommandInitializeContextFallback.test.ts
+          packages/renderer/src/Command/service/CommandInitializeContextAcquisition.test.ts
+          packages/renderer/src/CommandController.test.ts
+          packages/core/src/Canvas/usecase/CanvasRendererRecoveryUseCase.test.ts
       - run: node npm/player/build.mjs
       - run: node npm/player/check-packed.mjs
       - name: Pack only the ZUKU distribution

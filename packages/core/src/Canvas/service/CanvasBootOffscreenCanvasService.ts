@@ -9,14 +9,17 @@ import { $rendererWorker } from "../../RendererWorker";
  * @method
  * @public
  */
-export const execute = (canvas: HTMLCanvasElement): void =>
-{
+export const execute = (
+    canvas: HTMLCanvasElement,
+    backend: "auto" | "webgl2" = "auto"
+): void => {
     const offscreenCanvas = canvas.transferControlToOffscreen();
 
     // postMessage
     $rendererWorker.postMessage({
         "command": "initialize",
         "canvas": offscreenCanvas,
-        "devicePixelRatio": window.devicePixelRatio
+        "devicePixelRatio": window.devicePixelRatio,
+        "backend": backend
     }, [offscreenCanvas]);
 };

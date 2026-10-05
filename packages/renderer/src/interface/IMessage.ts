@@ -7,6 +7,7 @@ export interface IMessage {
     imageBitmaps?: ImageBitmap[] | null;
     canvas?: OffscreenCanvas;
     devicePixelRatio?: number;
+    backend?: "auto" | "webgl2";
     id?: string;
     bgColor: number;
     bgAlpha: number;

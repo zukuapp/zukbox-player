@@ -1,6 +1,6 @@
 {
   "name": "@zuku/player",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "ZUKU browser game player distribution of the maintained Next2D fork",
   "type": "module",
   "license": "MIT",

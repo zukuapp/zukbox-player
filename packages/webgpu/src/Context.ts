@@ -462,6 +462,43 @@ export class Context
     }
 
     /**
+     * @description 検証用キャンバスで初期化したコンテキストを本番キャンバスへ付け替える。
+     *              configure()が例外を投げた場合は元のキャンバスコンテキストを維持したまま再送出する。
+     *              Move a context that was initialised (and verified) on a probe canvas onto the
+     *              real canvas. If configure() throws, the previous canvas context is kept and the
+     *              error is rethrown so the caller can decide how to recover.
+     *
+     * @param  {GPUCanvasContext} canvas_context
+     * @return {void}
+     * @method
+     * @public
+     */
+    rebindCanvasContext (canvas_context: GPUCanvasContext): void
+    {
+        canvas_context.configure({
+            "device": this.device,
+            "format": this.preferredFormat,
+            "alphaMode": "premultiplied"
+        });
+
+        const previous = this.canvasContext;
+        this.canvasContext = canvas_context;
+        if (previous !== canvas_context) {
+            try {
+                previous.unconfigure();
+            } catch {
+                // the probe context is discarded either way
+            }
+        }
+
+        this.viewportWidth  = canvas_context.canvas.width;
+        this.viewportHeight = canvas_context.canvas.height;
+        this.mainTexture      = null;
+        this.mainTextureView  = null;
+        this.$needsReconfigure = false;
+    }
+
+    /**
      * @description 転送範囲をリセット（フレーム開始）
      *              Reset transfer bounds (frame start)
      *
