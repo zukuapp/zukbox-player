@@ -255,8 +255,6 @@ sprite.cacheAsBitmap = null;
 - During animations with frequent scale changes, the cache is regenerated every frame, so caching is most effective after animations complete and the object is static
 
 **Notes:**
-- **Only scale values can be set in the Matrix** (rotation and translation are ignored)
-- **Not applicable to Video** (fixed-size image data)
 - While cached, changes to children (add/remove/property changes) are not reflected on screen
 - Cache is automatically invalidated when `stage.rendererScale` changes
 - When both `filter` and `cacheAsBitmap` are set, `cacheAsBitmap` takes priority

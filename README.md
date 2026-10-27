@@ -20,7 +20,7 @@
 
 ## 개요
 
-이 저장소는 [Next2D Player](https://github.com/Next2D/Player)의 ZUKU 포크입니다. 디스플레이 트리, 텍스트·미디어, 렌더링 큐, WebGL·WebGPU 렌더러를 npm 워크스페이스로 관리합니다. 원본 저작권과 [MIT 라이선스](LICENSE)를 유지합니다.
+이 저장소는 [Next2D Player](https://github.com/Next2D/Player)의 ZUKU 포크입니다. 디스플레이 트리, 텍스트·미디어, 렌더링 큐, WebGL·WebGPU 렌더러를 npm 워크스페이스로 관리합니다. 라이선스는 [MIT](LICENSE)입니다.
 
 문서: [ZUKU 개발자 문서](https://zukuapp.github.io/docs/) · [개발 가이드](DEVELOP.md)
 
@@ -33,7 +33,7 @@
 | `specs/` | 플레이어 API 사양 문서(영어, 일본어, 중국어) |
 | `DEVELOP.md` | 워크스페이스 설치, 검증 명령, 렌더링 구조 |
 
-워크스페이스 패키지 이름은 `@next2d/player`와 `@next2d/*`를 유지합니다. 이 포크는 업스트림 `@next2d/*` 네임스페이스로 게시하지 않습니다. 게임 개발용 배포 패키지는 `@zuku/player`입니다. 배포 구성은 [개발 가이드](DEVELOP.md#배포-경계)에 설명합니다.
+npm 레지스트리의 `@next2d/*` 패키지는 업스트림 배포판이며, 이 포크를 사용할 때는 `@zuku/player`를 설치합니다.
 
 ## 요구 사항
 
@@ -54,7 +54,7 @@ npm ci
 npm install @zuku/player
 ```
 
-`@zuku/player`의 브라우저 ESM API와 빌드 방법은 [npm/player/README.md](npm/player/README.md)에 있습니다. 배포 패키지는 렌더러 워커와 TypeScript 6 타입 선언을 포함하며, 로컬 워크스페이스 의존성이 없습니다.
+`@zuku/player`의 브라우저 ESM API와 빌드 방법은 [npm/player/README.md](npm/player/README.md)에 있습니다.
 
 ## 사용법
 

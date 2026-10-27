@@ -320,11 +320,6 @@ The Loader class handles loading JSON files exported from Next2D AnimationTool o
 
 Loader クラスは、Next2D AnimationTool で書き出された JSON ファイルの読み込みのみに対応しています。画像やその他のメディアファイルの直接読み込みには対応していません。
 
-**Important / 重要:**
-- Only supports JSON files exported from Next2D AnimationTool / Next2D AnimationTool で書き出された JSON ファイルのみ対応
-- Does not support loading images (PNG, JPG, etc.) directly / 画像（PNG、JPGなど）の直接読み込みには非対応
-- Does not support loading videos directly / ビデオの直接読み込みには非対応
-
 ```typescript
 import { Loader } from "@next2d/display";
 import { URLRequest } from "@next2d/net";
@@ -351,11 +346,6 @@ The package follows a clean architecture pattern with separation of concerns:
 - **Service Layer** - Reusable business logic / 再利用可能なビジネスロジック
 - **Use Case Layer** - Specific feature implementations / 特定の機能実装
 - **Interface Layer** - TypeScript type definitions / TypeScript 型定義
-
-This architecture ensures:
-- Code reusability and maintainability / コードの再利用性と保守性
-- Clear separation between public API and implementation / パブリック API と実装の明確な分離
-- Testability of individual components / 個々のコンポーネントのテスト可能性
 
 ## Related Packages / 関連パッケージ
 

@@ -165,17 +165,6 @@ The WebGPU package uses a texture atlas system to optimize rendering performance
 
 WebGPUパッケージは、レンダリングパフォーマンスを最適化するためにテクスチャアトラスシステムを使用しています:
 
-### Benefits / 利点
-
-- **Reduced draw calls**: Multiple textures are packed into a single atlas, reducing the number of texture bindings
-  - **描画コールの削減**: 複数のテクスチャが単一のアトラスにパックされ、テクスチャバインディングの数が削減されます
-
-- **Memory efficiency**: Optimal packing algorithm minimizes wasted GPU memory
-  - **メモリ効率**: 最適なパッキングアルゴリズムにより、無駄なGPUメモリが最小化されます
-
-- **Cache coherency**: Better GPU cache utilization through spatial locality
-  - **キャッシュコヒーレンシー**: 空間的局所性による優れたGPUキャッシュ利用
-
 ### Atlas Management / アトラス管理
 
 The `AtlasManager` component uses the `@next2d/texture-packer` package to:

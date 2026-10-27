@@ -1,6 +1,6 @@
 # ZUKBOX Player 개발 가이드
 
-[ZUKU 포크](https://github.com/zukuapp/zukbox-player)는 [Next2D Player](https://github.com/Next2D/Player)를 기반으로 합니다. 워크스페이스 패키지 이름과 내부 import 경계는 `@next2d/*`를 유지합니다. 플랫폼 전체 구성은 [ZUKU 개발자 문서](https://zukuapp.github.io/docs/)에 있습니다.
+[ZUKU 포크](https://github.com/zukuapp/zukbox-player)는 [Next2D Player](https://github.com/Next2D/Player)를 기반으로 합니다. 워크스페이스 패키지와 import 경로는 `@next2d/*` 이름을 사용합니다. 플랫폼 전체 구성은 [ZUKU 개발자 문서](https://zukuapp.github.io/docs/)에 있습니다.
 
 ## 준비와 실행
 
@@ -34,7 +34,7 @@ npm run build:vite
 | 렌더링 | `renderer`, `webgl`, `webgpu` |
 | 화면·입출력 | `display`, `text`, `media`, `ui`, `net` |
 
-공통 기능 패키지 간 순환 참조를 피합니다. `@next2d/core`는 다른 하위 패키지가 참조하는 공통 유틸리티가 아니라 상위 진입점입니다. `@next2d/renderer`는 워커에서 WebGL과 WebGPU 백엔드를 사용합니다. 실제 import 관계를 바꿀 때는 각 패키지의 `package.json`과 소스 import를 함께 확인합니다.
+공통 기능 패키지 간 순환 참조를 피합니다. `@next2d/core`는 상위 진입점이므로 다른 하위 패키지에서 참조하지 않습니다. `@next2d/renderer`는 워커에서 WebGL과 WebGPU 백엔드를 사용합니다. 실제 import 관계를 바꿀 때는 각 패키지의 `package.json`과 소스 import를 함께 확인합니다.
 
 기존 소스는 단순 작업을 `class → method → service`, 여러 작업을 조합하는 흐름을 `class → method → usecase → service`로 나눕니다. `service`에서 다른 `service`를 직접 호출하지 않고, 조합은 `usecase`에 둡니다. 예시는 `packages/webgl/src/`의 `service/`와 `usecase/`에 있습니다.
 
@@ -58,7 +58,7 @@ npm run test:e2e:webgpu
 
 ## 배포 경계
 
-루트 패키지는 `@next2d/player`, 하위 워크스페이스는 `@next2d/*` 이름을 사용합니다. 이 포크는 업스트림 `@next2d/*` 네임스페이스로 게시하지 않습니다. `npm run publish:dist`는 업스트림 배포 산출물을 만드는 유지보수 명령입니다.
+`npm run publish:dist`는 업스트림 `@next2d/*` 배포 산출물을 만드는 명령이며, 이 포크의 배포에는 사용하지 않습니다.
 
 게임 개발용 배포 패키지는 `npm/player/`의 `@zuku/player`입니다. `.github/workflows/publish.yml`은 다음 경우에 실행합니다.
 
@@ -75,7 +75,3 @@ npm run test:e2e:webgpu
 3. `node npm/player/build.mjs`로 패키지를 빌드합니다.
 4. `node npm/player/check-packed.mjs`로 패키지 내용을 검사합니다.
 5. `npm pack ./npm/player`로 아카이브를 만듭니다.
-
-워크플로는 npm에 게시하지 않습니다. 릴리스 담당자가 검증된 `@zuku/player` 아카이브를 직접 게시합니다.
-
-일반적인 로컬 검증에는 위의 `lint`, `test`, `build:vite`를 사용합니다. 원본 저작권 고지와 [MIT 라이선스](LICENSE)는 유지합니다.

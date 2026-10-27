@@ -8,11 +8,10 @@ ZUKU - 내가 불러 일으키는 새로운 창작.
 
 ## 개요
 
-`@zuku/player`는 ZUKU / ZUKBOX 게임 프로젝트용 Next2D 브라우저 플레이어 배포 패키지입니다. 브라우저 ESM 번들이며 렌더러 워커와 unzip 워커를 포함합니다. 원본 Next2D 코드, MIT 저작권 표시, 소스 패키지 이름을 유지합니다. 업스트림 `@next2d/*` 패키지를 게시하거나 대체하지 않습니다.
+`@zuku/player`는 ZUKU / ZUKBOX 게임 프로젝트용 Next2D 브라우저 플레이어 배포 패키지입니다. 브라우저 ESM 번들이며 렌더러 워커와 unzip 워커를 포함합니다.
 
 | 항목 | 버전 |
 | --- | --- |
-| 문서 릴리스 | v27.26102701 |
 | 기반 Next2D Player | 3.11.0 |
 | npm 패키지 `@zuku/player` | 0.1.2 |
 
@@ -51,8 +50,6 @@ root.addChild(shape);
 | `worker-src` | `'self' blob: data:` | 렌더러와 unzip 워커 실행 |
 | `style-src` | `'self' 'unsafe-inline'` | 플레이어의 동적 스타일 |
 
-JavaScript `unsafe-eval` 권한은 필요하지 않습니다.
-
 ## 그래픽 복구
 
 1. WebGPU adapter와 device 획득 대기 시간에는 상한이 있습니다.
@@ -73,13 +70,13 @@ node npm/player/build.mjs
 
 ## 라이선스
 
-원본 권리 표시는 `THIRD_PARTY_NOTICES.md`와 `LICENSE`에 있습니다. 공식 로고는 승인된 원본 PNG 파일입니다.
+원본 권리 표시는 `THIRD_PARTY_NOTICES.md`와 `LICENSE`에 있습니다.
 
 ## English
 
-`@zuku/player` is the ZUKU / ZUKBOX distribution of the maintained Next2D browser player. It is a browser ESM bundle that includes the renderer and unzip workers. It preserves the original Next2D code, MIT attribution, and source package names. It does not publish or replace the upstream `@next2d/*` packages.
+`@zuku/player` is the ZUKU / ZUKBOX distribution of the maintained Next2D browser player. It is a browser ESM bundle that includes the renderer and unzip workers.
 
 - Requirements: a browser with DOM and Workers, WebGPU or WebGL2, TypeScript 6 or later with `moduleResolution: Bundler` and DOM types.
 - Node.js consumers use the types or import the package in a browser bundle.
-- CSP: `worker-src 'self' blob: data:` and `style-src 'self' 'unsafe-inline'`. `unsafe-eval` is not required.
+- CSP: `worker-src 'self' blob: data:` and `style-src 'self' 'unsafe-inline'`.
 - WebGPU acquisition is bounded. Failed initialization or a lost device falls back to WebGL2. When the stage canvas is already bound to WebGPU, the player replaces it and restores its size. Late results and errors from a replaced renderer do not overwrite the current renderer. Recovery is limited to two canvas replacements per page. If both backends fail, the player reports `next2d-renderer` with `state: "failed"` and releases waiting render and capture buffers.

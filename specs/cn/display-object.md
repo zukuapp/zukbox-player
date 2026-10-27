@@ -255,8 +255,6 @@ sprite.cacheAsBitmap = null;
 - 在缩放频繁变化的动画期间，缓存每帧都会重新生成，因此缓存在动画完成后的静态状态下最为有效
 
 **注意事项：**
-- **Matrix 中仅可设置缩放值**（旋转和平移将被忽略）
-- **不适用于 Video**（固定尺寸的图像数据）
 - 缓存期间，子元素的更改（添加/删除/属性更改）不会反映在屏幕上
 - 当 `stage.rendererScale` 更改时，缓存会自动失效
 - 同时设置 `filter` 和 `cacheAsBitmap` 时，`cacheAsBitmap` 优先

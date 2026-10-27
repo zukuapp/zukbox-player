@@ -137,6 +137,8 @@ sequenceDiagram
 
 The renderer uses a command queue pattern to efficiently manage asynchronous rendering operations.
 
+ArrayBufferとImageBitmapはTransferableオブジェクトとして転送します。 / ArrayBuffer and ImageBitmap are passed as Transferable objects.
+
 ### キュー管理 / Queue Management
 
 1. **メッセージ受信 / Message Reception**: メインスレッドからメッセージが到着すると、`queue`配列にプッシュされます / When a message arrives from the main thread, it's pushed into the `queue` array
@@ -152,13 +154,6 @@ The renderer uses a command queue pattern to efficiently manage asynchronous ren
 - **capture**: 現在のフレームをImageBitmapとしてキャプチャ / Capture current frame as ImageBitmap
 - **removeCache**: 特定のキャッシュアイテムを削除 / Remove specific cached items
 - **cacheClear**: キャッシュストア全体をクリア / Clear entire cache store
-
-### メリット / Benefits
-
-- **ノンブロッキング / Non-blocking**: レンダリング中もメインスレッドはレスポンシブなまま / Main thread remains responsive during rendering
-- **効率的 / Efficient**: コマンドはバッチ処理され、非同期で処理されます / Commands are batched and processed asynchronously
-- **スレッドセーフ / Thread-safe**: Workerの分離により競合状態を防止 / Worker isolation prevents race conditions
-- **転送可能オブジェクト / Transferable Objects**: ゼロコピーメッセージパッシングのために転送可能オブジェクト(ArrayBuffer、ImageBitmap)を使用 / Uses Transferable objects (ArrayBuffer, ImageBitmap) for zero-copy message passing
 
 ## 使用例 / Usage Example
 
