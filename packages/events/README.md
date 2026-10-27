@@ -6,9 +6,9 @@
 
 ## 概要 / Overview
 
-`@next2d/events` パッケージは、EventDispatcher パターンに基づく包括的なイベント処理システムを提供します。このパッケージは、イベントのバブリング、キャプチャリング、およびインタラクティブアプリケーションで一般的に使用される様々なイベントタイプをサポートする堅牢なイベントフロー機構を実装しています。
+`@next2d/events` パッケージは、EventDispatcher パターンに基づくイベント処理システムを提供します。このパッケージは、イベントのバブリング、キャプチャリング、およびインタラクティブアプリケーションで一般的に使用される様々なイベントタイプをサポートするイベントフロー機構を実装しています。
 
-The `@next2d/events` package provides a comprehensive event handling system based on the EventDispatcher pattern. This package implements a robust event flow mechanism with support for event bubbling, capturing, and various event types commonly used in interactive applications.
+The `@next2d/events` package provides an event handling system based on the EventDispatcher pattern. This package implements an event flow mechanism with support for event bubbling, capturing, and various event types commonly used in interactive applications.
 
 ## インストール / Installation
 
@@ -24,8 +24,8 @@ npm install @next2d/events
   - Support for capturing and bubbling phases with event propagation control
 - **複数のイベントタイプ**: 一般的なユースケース（ポインター、キーボード、フォーカス、ビデオなど）のための事前定義されたイベントクラス
   - Pre-defined event classes for common use cases (pointer, keyboard, focus, video, etc.)
-- **型安全性**: 包括的な型定義による完全な TypeScript サポート
-  - Full TypeScript support with comprehensive type definitions
+- **型安全性**: 全イベントクラスの TypeScript 型定義
+  - TypeScript type definitions for all event classes
 - **サービスベースアーキテクチャ**: イベントディスパッチャー操作のためのモジュラーサービス層
   - Modular service layer for event dispatcher operations
 

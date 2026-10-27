@@ -1,6 +1,6 @@
 # 补间动画
 
-Next2D Player 使用 `@next2d/ui` 包的 Tween 系统来实现程序化动画。您可以平滑地动画化位置、大小和透明度等属性。
+Next2D Player 使用 `@next2d/ui` 包的 Tween 系统来实现程序化动画。Tween 可对位置、大小和透明度等属性进行动画处理。
 
 ## 基本补间概念
 

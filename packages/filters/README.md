@@ -7,10 +7,10 @@
 ## Overview / 概要
 
 **English:**
-The `@next2d/filters` package provides GPU-accelerated visual effect filters for DisplayObjects in the Next2D player. This package includes a comprehensive set of bitmap filter effects that can be applied to any display object, offering high-performance image processing capabilities powered by WebGL/WebGPU.
+The `@next2d/filters` package provides GPU-accelerated visual effect filters for DisplayObjects in the Next2D player. This package includes bitmap filter effects that apply to any display object. Image processing runs on WebGL/WebGPU.
 
 **日本語:**
-`@next2d/filters` パッケージは、Next2D プレイヤーの DisplayObject に対して GPU アクセラレーションによる視覚エフェクトフィルターを提供します。このパッケージには、任意の表示オブジェクトに適用可能なビットマップフィルター効果の包括的なセットが含まれており、WebGL/WebGPU によって高速化された画像処理機能を提供します。
+`@next2d/filters` パッケージは、Next2D プレイヤーの DisplayObject に対して GPU アクセラレーションによる視覚エフェクトフィルターを提供します。このパッケージには、任意の表示オブジェクトに適用するビットマップフィルター効果が含まれます。画像処理は WebGL/WebGPU で実行します。
 
 ## Installation / インストール
 
@@ -204,8 +204,6 @@ Each filter follows a clean architecture pattern with separation of concerns:
 - **UseCase Layer**: Specific use cases like bounds calculation
 - **Interface Layer**: Type definitions and contracts
 
-This architecture ensures maintainability, testability, and scalability of the filter system.
-
 **日本語:**
 各フィルターは、関心の分離を伴うクリーンアーキテクチャパターンに従っています：
 
@@ -213,8 +211,6 @@ This architecture ensures maintainability, testability, and scalability of the f
 - **サービス層**: フィルター操作のビジネスロジック（検証、変換、シリアライゼーション）
 - **ユースケース層**: バウンズ計算などの特定のユースケース
 - **インターフェース層**: 型定義と契約
-
-このアーキテクチャにより、フィルターシステムの保守性、テスト可能性、スケーラビリティが保証されます。
 
 ## Usage Example / 使用例
 

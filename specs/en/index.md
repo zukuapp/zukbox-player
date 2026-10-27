@@ -1,16 +1,16 @@
 # Next2D Player
 
-Next2D Player is a high-performance 2D rendering engine using WebGL/WebGPU. It provides Flash Player-like functionality on the web, supporting vector graphics, Tween animations, text, audio, video, and more.
+Next2D Player is a 2D rendering engine using WebGL/WebGPU. It provides Flash Player-like functionality on the web, supporting vector graphics, Tween animations, text, audio, video, and more.
 
 ## Key Features
 
-- **High-Speed Rendering**: Fast 2D rendering using WebGL/WebGPU
+- **GPU Rendering**: 2D rendering using WebGL/WebGPU
 - **Multi-Platform**: Supports desktop to mobile devices
-- **Rich Filters**: Supports Blur, DropShadow, Glow, Bevel, and more
+- **Filters**: Supports Blur, DropShadow, Glow, Bevel, and more
 
 ## Rendering Pipeline
 
-An overview of the pipeline that enables Next2D Player's high-speed rendering.
+Overview of the Next2D Player rendering pipeline.
 
 ```mermaid
 flowchart TB
@@ -93,9 +93,8 @@ flowchart TB
 ### Pipeline Features
 
 - **Batch Rendering**: Render multiple objects in a single GPU call
-- **Texture Cache**: Efficiently process filters and blend effects
-- **Binary Tree Packing**: Optimal memory usage with texture atlas
-- **60fps Rendering**: Smooth animations at high frame rates
+- **Texture Cache**: Caches filter and blend results as textures
+- **Binary Tree Packing**: Packs textures into an atlas with a binary tree
 
 ## DisplayList Architecture
 

@@ -1,6 +1,6 @@
 # Tween Animation
 
-Next2D Player allows you to implement programmatic animations using the Tween system from the `@next2d/ui` package. You can smoothly animate properties like position, size, and transparency.
+Next2D Player implements programmatic animations with the Tween system from the `@next2d/ui` package. Tween animates properties such as position, size, and transparency.
 
 ## Basic Tween Concepts
 

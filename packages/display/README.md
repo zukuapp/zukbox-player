@@ -6,9 +6,9 @@ Next2D Player の Display パッケージ - DisplayObject 階層、Graphics 描�
 
 ## Overview / 概要
 
-The `@next2d/display` package provides the core visual object model for Next2D Player. It implements the complete DisplayObject hierarchy, a powerful vector graphics drawing API, and content loading capabilities.
+The `@next2d/display` package provides the core visual object model for Next2D Player. It implements the DisplayObject hierarchy, a vector graphics drawing API, and content loading.
 
-`@next2d/display` パッケージは Next2D Player のコアとなるビジュアルオブジェクトモデルを提供します。完全な DisplayObject 階層、強力なベクターグラフィックス描画 API、およびコンテンツ読み込み機能を実装しています。
+`@next2d/display` パッケージは Next2D Player のコアとなるビジュアルオブジェクトモデルを提供します。DisplayObject 階層、ベクターグラフィックス描画 API、およびコンテンツ読み込み機能を実装しています。
 
 ### Key Features / 主な機能
 

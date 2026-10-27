@@ -2,9 +2,9 @@
 
 ## 概要 / Overview
 
-`@next2d/renderer`は、Web Workerで動作するOffscreenCanvasベースのレンダリングエンジンです。Next2Dアプリケーション向けに高性能でノンブロッキングなレンダリングを提供します。レンダリング処理を別スレッドにオフロードすることで、スムーズなUI操作と効率的なグラフィックス処理を実現します。
+`@next2d/renderer`は、Web Workerで動作するOffscreenCanvasベースのレンダリングエンジンです。Next2Dアプリケーション向けにノンブロッキングなレンダリングを提供します。レンダリング処理は別スレッドで実行され、メインスレッドをブロックしません。
 
-`@next2d/renderer` is an OffscreenCanvas-based rendering engine that runs in a Web Worker, providing high-performance, non-blocking rendering for Next2D applications. By offloading rendering operations to a separate thread, it ensures smooth UI interactions and efficient graphics processing.
+`@next2d/renderer` is an OffscreenCanvas-based rendering engine that runs in a Web Worker, providing non-blocking rendering for Next2D applications. Rendering operations run on a separate thread, so they do not block the main thread.
 
 ## 主な特徴 / Key Features
 

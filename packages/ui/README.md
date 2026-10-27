@@ -4,9 +4,9 @@ Animation utilities package for Next2D Player / Next2Dプレイヤー向けア�
 
 ## Overview / 概要
 
-`@next2d/ui` provides a powerful animation system with Tween and comprehensive Easing functions for creating smooth, professional animations in your Next2D applications.
+`@next2d/ui` provides an animation system with Tween and Easing functions for Next2D applications.
 
-`@next2d/ui` は、Next2Dアプリケーションでスムーズでプロフェッショナルなアニメーションを作成するための、TweenとEasing機能を備えた強力なアニメーションシステムを提供します。
+`@next2d/ui` は、Next2Dアプリケーション向けに、TweenとEasing機能を備えたアニメーションシステムを提供します。
 
 ### Key Features / 主な機能
 

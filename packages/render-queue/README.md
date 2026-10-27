@@ -8,22 +8,22 @@
 
 **日本語:**
 
-`@next2d/render-queue`は、Next2D Playerのレンダリングパイプラインにおいて、描画データを効率的に管理するためのレンダーキューパッケージです。Float32Array型のバッファを使用し、DisplayObjectsからの描画命令をバッチ処理してWebGL/WebGPUに送信することで、高速なGPUレンダリングを実現します。
+`@next2d/render-queue`は、Next2D Playerのレンダリングパイプラインにおいて、描画データを効率的に管理するためのレンダーキューパッケージです。Float32Array型のバッファを使用し、DisplayObjectsからの描画命令をバッチ処理してWebGL/WebGPUに送信します。
 
 **English:**
 
-`@next2d/render-queue` is a render queue package that efficiently manages rendering data in the Next2D Player rendering pipeline. It uses a Float32Array-based buffer to batch rendering commands from DisplayObjects and send them to WebGL/WebGPU for high-performance GPU rendering.
+`@next2d/render-queue` is a render queue package that efficiently manages rendering data in the Next2D Player rendering pipeline. It uses a Float32Array-based buffer to batch rendering commands from DisplayObjects and send them to WebGL/WebGPU for GPU rendering.
 
 ## 特徴 / Features
 
-- **Float32Array型バッファ**: GPU最適化された高速なデータ構造
+- **Float32Array型バッファ**: GPU転送用の型付き配列バッファ
 - **動的リサイズ**: 2の累乗サイズで自動的にバッファを拡張
 - **バッチ処理**: 複数の描画命令をまとめてGPUに送信
 - **シングルトンパターン**: グローバルな`renderQueue`インスタンスで一元管理
 
 ---
 
-- **Float32Array-based buffer**: GPU-optimized high-performance data structure
+- **Float32Array-based buffer**: typed array buffer for GPU transfer
 - **Dynamic resizing**: Automatically expands buffer to power-of-two sizes
 - **Batch processing**: Groups multiple rendering commands for GPU submission
 - **Singleton pattern**: Centralized management via global `renderQueue` instance
@@ -74,7 +74,7 @@ packages/render-queue/
 
 1. **データ収集フェーズ**: DisplayObjectsのツリー構造を走査し、各オブジェクトの描画に必要なデータ（座標、色、変換行列など）をFloat32Arrayバッファに収集します。
 
-2. **バッチ処理**: 複数のDisplayObjectsからのデータを単一のバッファにまとめることで、GPUへの呼び出し回数を削減し、レンダリングパフォーマンスを大幅に向上させます。
+2. **バッチ処理**: 複数のDisplayObjectsからのデータを単一のバッファにまとめることで、GPUへの呼び出し回数を削減します。
 
 3. **GPU転送**: 収集されたデータはWebGL/WebGPUのバッファオブジェクトに転送され、シェーダープログラムで処理されます。
 
@@ -86,7 +86,7 @@ The render queue plays a central role in the Next2D Player rendering pipeline:
 
 1. **Data Collection Phase**: Traverses the DisplayObjects tree structure and collects data required for rendering each object (coordinates, colors, transformation matrices, etc.) into the Float32Array buffer.
 
-2. **Batch Processing**: Combines data from multiple DisplayObjects into a single buffer, reducing GPU call count and significantly improving rendering performance.
+2. **Batch Processing**: Combines data from multiple DisplayObjects into a single buffer, reducing GPU call count.
 
 3. **GPU Transfer**: Collected data is transferred to WebGL/WebGPU buffer objects and processed by shader programs.
 

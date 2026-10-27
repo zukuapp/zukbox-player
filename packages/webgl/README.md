@@ -4,9 +4,9 @@ WebGL2-based rendering engine for Next2D Player / Next2D Player用のWebGL2ベ�
 
 ## Overview / 概要
 
-The `@next2d/webgl` package is the main rendering backend for Next2D Player, providing a high-performance, shader-based drawing pipeline built on WebGL2. This package handles all graphics rendering operations including vector shapes, bitmaps, filters, and effects.
+The `@next2d/webgl` package is the main rendering backend for Next2D Player, providing a shader-based drawing pipeline built on WebGL2. This package handles all graphics rendering operations including vector shapes, bitmaps, filters, and effects.
 
-`@next2d/webgl`パッケージは、Next2D Playerのメインレンダリングバックエンドであり、WebGL2上に構築された高性能なシェーダーベースの描画パイプラインを提供します。このパッケージは、ベクター図形、ビットマップ、フィルター、エフェクトなど、すべてのグラフィックスレンダリング操作を処理します。
+`@next2d/webgl`パッケージは、Next2D Playerのメインレンダリングバックエンドであり、WebGL2上に構築されたシェーダーベースの描画パイプラインを提供します。このパッケージは、ベクター図形、ビットマップ、フィルター、エフェクトなど、すべてのグラフィックスレンダリング操作を処理します。
 
 ### Key Features / 主な特徴
 

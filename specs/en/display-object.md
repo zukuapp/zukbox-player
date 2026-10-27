@@ -169,7 +169,7 @@ displayObject.clearGlobalVariable(); // Clear all
 - `Sprite` — Cache containers and all their children together
 - `MovieClip` — Cache containers and all their children together
 
-> ⚠️ Not applicable to `Video`. Since Video has fixed image dimensions, caching provides no benefit.
+> Not applicable to `Video`. Since Video has fixed image dimensions, caching provides no benefit.
 
 **Matrix restriction:**
 Only scale values (a, d) can be set in the Matrix. Rotation (b, c) and translation (tx, ty) are ignored.
@@ -185,9 +185,9 @@ shape.cacheAsBitmap = new Matrix(1, 0.5, 0.5, 1, 100, 200);  // b, c, tx, ty ign
 
 **Use cases:**
 
-1. **Fast-moving animations** — Objects moving at high speed have low visual clarity, so quality loss from caching is barely noticeable while providing significant performance gains
+1. **Fast-moving animations** — Objects moving at high speed have low visual clarity, so quality loss from caching is barely noticeable and per-frame redraw is skipped
 2. **Static backgrounds and UI elements** — Caching unchanging UI elements (panels, decorations, icons) eliminates per-frame redraw costs
-3. **Complex vector drawings** — Caching Shapes with many paths dramatically reduces drawing overhead
+3. **Complex vector drawings** — Caching Shapes with many paths reduces drawing overhead
 
 ```typescript
 const { Shape, Sprite } = next2d.display;

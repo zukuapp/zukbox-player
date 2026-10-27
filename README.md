@@ -16,33 +16,55 @@
 
 # ZUKBOX Player
 
+![version](https://img.shields.io/badge/version-v27.26102701-informational)
+
+## 개요
+
 이 저장소는 [Next2D Player](https://github.com/Next2D/Player)의 ZUKU 포크입니다. 디스플레이 트리, 텍스트·미디어, 렌더링 큐, WebGL·WebGPU 렌더러를 npm 워크스페이스로 관리합니다. 원본 저작권과 [MIT 라이선스](LICENSE)를 유지합니다.
 
-**문서 입구:** [ZUKU 개발자 문서](https://zukuapp.github.io/docs/) · [이 저장소의 개발 가이드](DEVELOP.md)
-
-## 무엇이 들어 있나요?
+문서: [ZUKU 개발자 문서](https://zukuapp.github.io/docs/) · [개발 가이드](DEVELOP.md)
 
 | 경로 | 내용 |
 | --- | --- |
 | `src/` | `@next2d/player` 진입점 |
 | `packages/` | `@next2d/core`, `display`, `renderer`, `webgl`, `webgpu` 등 하위 패키지 |
+| `npm/player/` | 게임 개발용 배포 패키지 `@zuku/player` |
 | `e2e/` | Playwright 브라우저 렌더링 검사와 스냅샷 |
+| `specs/` | 플레이어 API 사양 문서(영어, 일본어, 중국어) |
 | `DEVELOP.md` | 워크스페이스 설치, 검증 명령, 렌더링 구조 |
 
-패키지 이름은 `@next2d/player`와 `@next2d/*`로 유지됩니다. `@zuku/*` 배포 설정은 없습니다. 배포를 포함한 저장소 설정은 [개발 가이드](DEVELOP.md#배포-경계)에 설명합니다.
+워크스페이스 패키지 이름은 `@next2d/player`와 `@next2d/*`를 유지합니다. 이 포크는 업스트림 `@next2d/*` 네임스페이스로 게시하지 않습니다. 게임 개발용 배포 패키지는 `@zuku/player`입니다. 배포 구성은 [개발 가이드](DEVELOP.md#배포-경계)에 설명합니다.
 
-## 빠른 시작
+## 요구 사항
 
-CI와 같은 Node.js 24 환경을 권장합니다.
+- Node.js 24 (CI 기준)
+- npm
+
+## 설치
 
 ```bash
 git clone https://github.com/zukuapp/zukbox-player.git
 cd zukbox-player
 npm ci
+```
+
+게임 프로젝트에서 배포 패키지를 사용할 때는 다음 명령으로 설치합니다.
+
+```bash
+npm install @zuku/player
+```
+
+`@zuku/player`의 브라우저 ESM API와 빌드 방법은 [npm/player/README.md](npm/player/README.md)에 있습니다. 배포 패키지는 렌더러 워커와 TypeScript 6 타입 선언을 포함하며, 로컬 워크스페이스 의존성이 없습니다.
+
+## 사용법
+
+Vite 개발 서버를 실행합니다.
+
+```bash
 npm run start
 ```
 
-변경 후에는 저장소에 정의된 명령으로 확인합니다.
+변경 후에는 다음 명령으로 검증합니다.
 
 ```bash
 npm run lint
@@ -50,16 +72,16 @@ npm test -- --run
 npm run build:vite
 ```
 
-브라우저 스냅샷 검사, 패키지 의존 경계, 렌더러 선택은 [DEVELOP.md](DEVELOP.md)를 참고해 주세요.
+브라우저 스냅샷 검사, 패키지 의존 경계, 렌더러 선택은 [DEVELOP.md](DEVELOP.md)에 설명합니다.
 
-## 연결되는 프로젝트
+## 관련 프로젝트
 
 - [zukbox](https://github.com/zukuapp/zukbox): 이 플레이어의 로컬 `@next2d/*` 패키지를 참조하는 에디터
 - [zukbox-runtime](https://github.com/zukuapp/zukbox-runtime): ZWF 런타임
 - [ZUKU 개발자 문서](https://zukuapp.github.io/docs/): 플랫폼 전체 문서
 
-기여 방법은 [조직 공통 가이드](https://github.com/zukuapp/.github/blob/main/CONTRIBUTING.md), 취약점 신고 방법은 [보안 정책](SECURITY.md)을 확인해 주세요.
+기여 방법은 [조직 공통 가이드](https://github.com/zukuapp/.github/blob/main/CONTRIBUTING.md)에, 취약점 신고 방법은 [보안 정책](SECURITY.md)에 있습니다.
 
-## ZUKU game-development npm distribution
+## 변경 이력
 
-The maintained fork is available to game developers as `@zuku/player`. Install with `npm install @zuku/player` and see [the browser ESM API and build guide](npm/player/README.md). The distribution includes renderer workers and TypeScript 6 declarations without local workspace dependencies. The source package names, upstream MIT copyright notices, and original Next2D APIs are preserved. This fork does not publish the upstream `@next2d/*` namespace.
+[CHANGELOG.md](CHANGELOG.md)에 기록합니다.

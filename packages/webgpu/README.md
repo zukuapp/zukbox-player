@@ -4,9 +4,9 @@ WebGPU-based rendering engine for Next2D Player / Next2D Player用のWebGPUベ�
 
 ## Overview / 概要
 
-The `@next2d/webgpu` package is a rendering backend for Next2D Player, providing a high-performance, shader-based drawing pipeline built on WebGPU. This package handles all graphics rendering operations including vector shapes, bitmaps, filters, and effects.
+The `@next2d/webgpu` package is a rendering backend for Next2D Player, providing a shader-based drawing pipeline built on WebGPU. This package handles all graphics rendering operations including vector shapes, bitmaps, filters, and effects.
 
-`@next2d/webgpu`パッケージは、Next2D Playerのレンダリングバックエンドであり、WebGPU上に構築された高性能なシェーダーベースの描画パイプラインを提供します。このパッケージは、ベクター図形、ビットマップ、フィルター、エフェクトなど、すべてのグラフィックスレンダリング操作を処理します。
+`@next2d/webgpu`パッケージは、Next2D Playerのレンダリングバックエンドであり、WebGPU上に構築されたシェーダーベースの描画パイプラインを提供します。このパッケージは、ベクター図形、ビットマップ、フィルター、エフェクトなど、すべてのグラフィックスレンダリング操作を処理します。
 
 ### Key Features / 主な特徴
 
@@ -16,7 +16,7 @@ The `@next2d/webgpu` package is a rendering backend for Next2D Player, providing
 - **Advanced filters** - Full support for color matrix, blur, glow, displacement map and more / カラーマトリックス、ブラー、グロー、ディスプレースメントマップなどのフルサポート
 - **Blend modes** - Multiple blend mode support with stencil operations / ステンシル操作による複数のブレンドモードサポート
 - **Masking system** - Stencil buffer-based masking for complex clipping / 複雑なクリッピングのためのステンシルバッファベースのマスキング
-- **Compute shaders** - GPU compute-based blur processing for high-performance filter effects / 高性能フィルターエフェクトのためのGPUコンピュートベースのブラー処理
+- **Compute shaders** - GPU compute-based blur processing for filter effects / フィルターエフェクトのためのGPUコンピュートベースのブラー処理
 
 ## Installation / インストール
 

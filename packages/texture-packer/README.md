@@ -6,9 +6,9 @@
 
 ## 概要 / Overview
 
-`@next2d/texture-packer` は、GPU テクスチャ割り当てに最適化された二分木ベースのパッキングアルゴリズムを実装した、高性能なテクスチャアトラス管理ライブラリです。このパッケージは、固定サイズのアトラス内でテクスチャの配置と削除を効率的に管理し、テクスチャメモリの断片化を最小限に抑え、スペース利用率を最大化します。
+`@next2d/texture-packer` は、GPU テクスチャ割り当てに最適化された二分木ベースのパッキングアルゴリズムを実装した、テクスチャアトラス管理ライブラリです。このパッケージは、固定サイズのアトラス内でテクスチャの配置と削除を効率的に管理し、テクスチャメモリの断片化を最小限に抑え、スペース利用率を最大化します。
 
-`@next2d/texture-packer` is a high-performance texture atlas management library that implements a binary tree-based packing algorithm optimized for GPU texture allocation. This package efficiently manages the placement and removal of textures within a fixed-size atlas, minimizing texture memory fragmentation and maximizing space utilization.
+`@next2d/texture-packer` is a texture atlas management library that implements a binary tree-based packing algorithm optimized for GPU texture allocation. This package efficiently manages the placement and removal of textures within a fixed-size atlas, minimizing texture memory fragmentation and maximizing space utilization.
 
 ## 主な機能 / Key Features
 

@@ -2,16 +2,16 @@
 
 ## Overview / 概要
 
-The `@next2d/text` package provides comprehensive TextField rendering capabilities with rich HTML text support, interactive input handling, and advanced text formatting. This package is the core text engine for the Next2D player framework.
+The `@next2d/text` package provides TextField rendering with HTML text support, interactive input handling, and text formatting. This package is the core text engine for the Next2D player framework.
 
-`@next2d/text` パッケージは、リッチHTMLテキストサポート、インタラクティブな入力処理、高度なテキストフォーマット機能を備えた包括的なTextFieldレンダリング機能を提供します。このパッケージは、Next2Dプレイヤーフレームワークのコアテキストエンジンです。
+`@next2d/text` パッケージは、HTMLテキストサポート、インタラクティブな入力処理、テキストフォーマット機能を備えたTextFieldレンダリング機能を提供します。このパッケージは、Next2Dプレイヤーフレームワークのコアテキストエンジンです。
 
 ### Key Features / 主な機能
 
 - **TextField Rendering**: Display text with various formatting options
 - **HTML Text Support**: Parse and render HTML-formatted text with tags like `<b>`, `<i>`, `<font>`, etc.
 - **Text Input Handling**: Interactive text input with composition events (IME support)
-- **Text Formatting**: Rich text formatting with TextFormat class
+- **Text Formatting**: Text formatting with the TextFormat class
 - **Auto-sizing**: Automatic text field resizing based on content
 - **Scrolling**: Horizontal and vertical text scrolling
 
@@ -349,9 +349,9 @@ textField.addEventListener("change", (event) => {
 
 ## Testing / テスト
 
-All major components include comprehensive unit tests with `.test.ts` files.
+Major components have unit tests in `.test.ts` files.
 
-すべての主要コンポーネントには、`.test.ts` ファイルによる包括的なユニットテストが含まれています。
+主要コンポーネントには `.test.ts` ファイルのユニットテストがあります。
 
 ```bash
 npm test
